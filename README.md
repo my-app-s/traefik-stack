@@ -18,7 +18,7 @@
 
 ## 🏷️ Trademarks
 
-This project is an independent work and is not affiliated with or endorsed by Docker, Portainer, or Traefik.
+This project is an independent work and is not affiliated with or endorsed by Docker, Traefik.
 
 All product names, logos, and brands are the property of their respective owners.
 
