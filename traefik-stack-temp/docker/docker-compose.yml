@@ -1,10 +1,6 @@
 services:
   traefik:
-    image: traefik:${VERSION_T:-latest}
-    # необходимо переменной для вариантов маштабируемости
-    # при дефолте маштабируемость горизонтальная работа как балансировка
-    # но если задать имя проекта то маштабирование вертикальное
-    # тем самым появится возможность на хосте поднимать уникальные traefik
+    image: traefik:${VERSION_T:-v3.3}
     container_name: ${PROJECT_NAME:-traefik}
     restart: unless-stopped
     ports:
@@ -14,52 +10,30 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_certificates:/letsencrypt
     command:
-      # settings output log int terminal
-      - "--log.level=INFO" # only log INFO without DEBUG spam message
-      - "--log.format=common" # set format text for system log, easy read humans
-      - "--accesslog=true" # log all HTTP/HTTPS requests
-      - "--accesslog.format=json" # format log in JSON
-      # disable global settings check version and send anonimus age
-      - "--global.checknewversion=false" # disable update for local
-      - "--global.sendanonymoususage=false" # disable telemetry
-      # main settings router
+      - "--log.level=INFO"
+      - "--log.format=common"
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
       - "--providers.docker=true"
-      # для безопасномти проксировать только те контейнеры где настроен lables
       - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=network_stack" # set network docker
-      - "--entrypoints.${VERSION_T:-web}.address=:80"
-      - "--entrypoints.${VERSION_T:-websecure}.address=:443"
-      # autoredirect 80 to 443, struct order
-      # нужно вытащить в env
+      - "--providers.docker.network=${PROJECT_NAME:-traefik}_public_network"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-      # run chalenge check domain to you
       - "--certificatesresolvers.${RESOLVER_NAME:-myresolver}.acme.tlschallenge=true"
-      # email set for message
       - "--certificatesresolvers.${RESOLVER_NAME:-myresolver}.acme.email=${ACME_EMAIL:-admin@localhost.local}"
-      # paht to container
       - "--certificatesresolvers.${RESOLVER_NAME:-myresolver}.acme.storage=/letsencrypt/acme.json"
     networks:
       - network_stack
 
-# облехчение балансировки одно имя и сеть при горизонтальном маштабировании
-# будет проще поднять одиноковые с одними данные
-# то есть горизонтально сработает балансировка
-#
-# тоесть за счет присвоения названия проекта появляется вертикальная маштабируемость
-# как уникальные маршруты, по дефолту маштабируемость горизонтальная
 volumes:
   traefik_certificates:
-# фиксированное имя сети — это плюс: контейнерам легко «найти» балансировщик
-# все реплики подключаются к одной сети при горизонтальном
-# при указании имени проекта будет отделение от реплик как уникальные стек
-    name: ${PROJECT_NAME:-traefik}_certificates # один сертификат пойдет на всех при горизонтальном
+    name: ${PROJECT_NAME:-traefik}_certificates
 
 networks:
   network_stack:
-    name: ${PROJECT_NAME:-traefik}_public_network # одина сеть пойдет на всех при горизонтальном
-
-# то есть при развертывании в одной сети то маштабирование горизонтальное
-#   как балансировщик
-# при новом экземпляре с новой сетью то уже вертикальная
-#   как отдельный маршрутизатор
+    name: ${PROJECT_NAME:-traefik}_public_network
+    external: true
