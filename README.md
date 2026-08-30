@@ -6,16 +6,6 @@
 
 ---
 
-## 📜 Disclaimer
-
-**English**: Materials are provided ***as is*** under the LICENSE file. No warranties, no rights granted unless explicitly stated. Authors are not liable for damages. No partnership or obligations created.  
-
-**Русский**: Материалы предоставляются ***как есть*** и регулируются LICENSE. Гарантий нет, права не передаются без явного указания. Автор(ы) не несут ответственности. Партнёрство или обязательства не создаются.  
-
-📌 See full disclaimer in [DISCLAIMER.md](https://github.com/my-app-s/my-app-s/blob/main/DISCLAIMER.md)
-
----
-
 ## 🏷️ Trademarks
 
 This project is an independent work and is not affiliated with or endorsed by Docker, Traefik.
@@ -24,8 +14,17 @@ All product names, logos, and brands are the property of their respective owners
 
 ---
 
-## 📜 License
+## Disclaimer & License
 
-This project is licensed under the GNU Affero General Public License v3.0.
+* **Short Disclaimer (EN)**: Materials are provided ***as is*** under the LICENSE file. No warranties. Authors are not liable for damages. No partnership or obligations created.
+* **Short Disclaimer (RU)**: Материалы предоставляются ***как есть*** и регулируются файлом LICENSE. Гарантий нет. Автор(ы) не несут ответственности за убытки. Партнёрство или обязательства не создаются.
+* **Full Disclaimer**: Read the full text in the [DISCLAIMER](./DISCLAIMER.md) (Available in EN/RU).
+* **License**: This project is dual-licensed:
+  * **Open Source**: Licensed under the [GNU AGPLv3](./LICENSE).
+  * **Commercial**: A separate proprietary commercial license is required for proprietary, closed-source, or enterprise use that does not comply with AGPLv3 terms. Contact the copyright holder for commercial licensing.
 
-See the [LICENSE](./LICENSE) file for details.
+## Author & Contacts
+
+* **GitHub**: [@my-app-s](https://github.com/my-app-s)
+* **LinkedIn**: [In/my-app-s](https://www.linkedin.com/in/my-app-s)
+* **Mail**: [myapps.mre.dev@gmail.com](mailto:myapps.mre.dev@gmail.com)
